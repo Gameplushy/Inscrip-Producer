@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client.Exceptions;
 
@@ -29,17 +28,9 @@ namespace Inscrip.Controllers
             {
                 return BadRequest("Rabbit server broker was not found. Did you forget to turn on its Docker image?");
             }
-            catch(DbUpdateException dbue)
+            catch(ArgumentException ae)
             {
-                SqlException? innerException = (SqlException?)dbue.InnerException;
-                if (innerException != null && innerException.Number == 2627) //Id for unique constraint error
-                {
-                    return BadRequest("Someone with the same mail address already exists in the database.");
-                }
-                else
-                {
-                    return BadRequest("Something went wrong when updating the database...");
-                }     
+                return BadRequest("An account with this mail address already exists...");    
             }
         }
     }
