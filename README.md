@@ -10,8 +10,6 @@ You'll need :
 - DotNET 7 (download the SDK [here](https://dotnet.microsoft.com/en-us/download/dotnet/7.0))
 - Docker
 
-You can also have a database viewer like SSMS in order to have a direct view of the tables.
-
 ## How to begin
 
 ### Using Visual Studio
@@ -21,7 +19,6 @@ Open the solution (.sln file) using Visual Studio. In case there are compiler er
 Go to the solution's folder. Use the command `dotnet restore`.
 
 ### Using the exe
-You still need to download the source code to create the database beforehand. (Check "Using Visual Studio" or "Using cmd")
 Download the zip file found [here](https://github.com/Gameplushy/Inscrip-Producer/releases/tag/in-memory-release)
 
 ## How to use
