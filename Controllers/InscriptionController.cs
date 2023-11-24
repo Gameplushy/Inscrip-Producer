@@ -1,3 +1,5 @@
+using JWT.Algorithms;
+using JWT.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +35,13 @@ namespace Inscrip.Controllers
 
             try
             {
-                var res = _context.Inscriptions.Add(new Inscription() { FullName = username, MailAddress = mailAddress });
+                string jwt = JwtBuilder.Create().WithAlgorithm(new HMACSHA256Algorithm())
+                   .AddClaims(new Dictionary<string, object>()
+                   {
+                                    { "FullName", username },
+                                    { "Mail", mailAddress },
+                   }).WithSecret("MailHogging").Encode();
+                var res = _context.Inscriptions.Add(new Inscription() { FullName = username, MailAddress = mailAddress, JWT = jwt });
                 _context.SaveChanges();
                 return Ok(res.Entity);
             }
