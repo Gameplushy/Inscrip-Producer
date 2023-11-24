@@ -15,6 +15,7 @@ namespace Inscrip
 
         public override int SaveChanges()
         {
+            int res = base.SaveChanges();
             ConnectionFactory factory = new ConnectionFactory();
             factory.Uri = new Uri("amqp://guest:guest@localhost:5672/%2f");
 
@@ -29,7 +30,6 @@ namespace Inscrip
                     ch.BasicPublish(exchange: "", routingKey: "myQueue", basicProperties: null, body: body);
                 }
             }
-            int res = base.SaveChanges();
             return res;
         }
     }
